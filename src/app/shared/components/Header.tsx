@@ -1,16 +1,23 @@
-function Header() {
+import { useLocation, Link } from 'react-router-dom';
+
+const Header = () => {
+  const location = useLocation();
+
   return (
-    <header className='header'>
+    <header
+      className={`header ${
+        location.pathname.includes('cart') && 'header-cart-page'
+      }`}>
       <div className='container'>
         <div className='wrapper'>
           <h1 className='logo'>
-            <a href='/' className='logo-link'>
+            <Link to='/' className='logo-link'>
               <img
                 src={require('../../../assets/images/Logo.png')}
                 alt='E-Shop'
                 className='logo-image'
               />
-            </a>
+            </Link>
           </h1>
           <nav className='nav-bar'>
             <ul className='nav-list'>
@@ -36,10 +43,10 @@ function Header() {
               <i className='icon icon-search'></i>
             </li>
             <li className='action-item'>
-              <a className='action-link' href='cart.html'>
+              <Link className='action-link' to='/cart'>
                 <div className='cart-quantity'></div>
                 <i className='icon icon-cart'></i>
-              </a>
+              </Link>
             </li>
             <li className='action-item'>
               <i className='icon icon-user'></i>
@@ -49,6 +56,6 @@ function Header() {
       </div>
     </header>
   );
-}
+};
 
 export default Header;

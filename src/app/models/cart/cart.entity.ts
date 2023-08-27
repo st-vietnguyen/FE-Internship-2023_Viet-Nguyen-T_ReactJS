@@ -23,6 +23,9 @@ export class CartItem implements CartItemType {
       ? this.price - (this.price * this.discount) / 100
       : this.price;
   };
+  calcTotalPrice = () : string => {
+    return (this.price * this.quantity).toFixed(2);
+  };
 }
 
 class Cart {
@@ -38,13 +41,13 @@ class Cart {
     }, 0);
     return total;
   };
-  calcTotalPrice = () => {
+  calcTotalPrice = (): string => {
     let total: number = this.listProduct.reduce(
       (acc: number, cur: CartItemType) =>
         acc + new CartItem(cur).calcDiscountPrice() * cur.quantity,
       0
     );
-    return total;
+    return total.toFixed(2);
   };
 }
 

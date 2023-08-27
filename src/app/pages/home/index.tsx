@@ -1,4 +1,5 @@
 import Footer from '../../shared/components/Footer';
+import Header from '../../shared/components/Header';
 import ProductToday from './ProductToday';
 import Recommend from './Recommend';
 import Subcribe from './Subcribe';
@@ -9,14 +10,17 @@ import Services from './services/Services';
 function Home() {
   return (
     <>
-      <div className='home-page'>
-        <Banner />
-        <Advertisement />
-        <Recommend />
-        <Services />
-        <ProductToday />
-        <Subcribe />
-      </div>
+      <Header />
+      <main className='main'>
+        <div className='home-page'>
+          <Banner />
+          <Advertisement />
+          <Recommend />
+          <Services />
+          <ProductToday />
+          <Subcribe />
+        </div>
+      </main>
       <Footer />
     </>
   );

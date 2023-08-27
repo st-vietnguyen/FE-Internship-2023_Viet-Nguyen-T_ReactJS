@@ -1,3 +1,5 @@
+import ProductList from './ProductList';
+
 function Recommend() {
   return (
     <section className='section section-products'>
@@ -5,10 +7,10 @@ function Recommend() {
         <div className='section-header'>
           <h3 className='section-title'>Selected just for you</h3>
           <a href='' className='section-product-link'>
-            {' '}
-            Show more{' '}
+            Show more
           </a>
         </div>
+        <ProductList />
       </div>
     </section>
   );

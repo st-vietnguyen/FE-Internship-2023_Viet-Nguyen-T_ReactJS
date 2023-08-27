@@ -3,10 +3,17 @@
     width: 100px;
     height: 100px;
   }
-
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .cart-total-price {
     display: inline-block;
     padding-top: 30px;
+  }
+  .product-quantity {
+    margin: 0 5px;
   }
 
   .btn-plus,
