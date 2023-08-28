@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
-import Product from '../../shared/components/Product';
-import data from '../../shared/data/data';
-import ProductModel from '../../models/product/product.entity';
-import { CartItem } from '../../models/cart/cart.entity';
+import Product from '../../../shared/components/Product';
+import data from '../../../shared/data/data';
+import ProductModel from '../../../models/product/product.entity';
+import { CartItemModel } from '../../../models/cart/cart';
 import {
   StorageKey,
   getDataFromLocalStorage,
   saveDataToLocalStorage,
-} from '../../shared/services/localStorage.service';
-import { ProductProps } from '../../models/product/product.interface';
+} from '../../../shared/services/localStorage.service';
+import { ProductProps } from '../../../models/product/product.interface';
 
 interface productProps {
   addToCart: (product: ProductProps) => void;
@@ -16,7 +16,7 @@ interface productProps {
 
 function ProductList({ addToCart }: productProps) {
   const [products, setProducts] = useState<ProductModel[]>();
-  const [cart, setCart] = useState<CartItem[]>(
+  const [cart, setCart] = useState<CartItemModel[]>(
     getDataFromLocalStorage(StorageKey.CART)
   );
   useEffect(() => {

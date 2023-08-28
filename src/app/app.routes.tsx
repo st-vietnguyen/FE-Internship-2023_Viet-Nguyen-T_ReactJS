@@ -1,6 +1,13 @@
+import { ReactElement, ReactNode } from 'react';
 import Cart from './pages/cart';
 import Home from './pages/home';
-const routes = [
+
+interface routes {
+  name: string;
+  path: string;
+  component: ReactElement;
+}
+const routes: routes[] = [
   {
     name: 'home',
     path: '/',

@@ -6,15 +6,15 @@ import {
   getDataFromLocalStorage,
   saveDataToLocalStorage,
 } from '../../shared/services/localStorage.service';
-import Cart, { CartItem } from '../../models/cart/cart.entity';
-import { CartItemAction } from '../../models/cart/cart.interface';
+import Cart, { CartItemAction, CartItemModel } from '../../models/cart/cart';
+import CartItem from './components/CartItem';
 
 const CartPage = () => {
   const [cart, setCart] = useState<Cart>(() => {
     const cartStore = getDataFromLocalStorage(StorageKey.CART);
     const cartData = new Cart(
-      cartStore.map((prd: CartItem) => {
-        return new CartItem(prd);
+      cartStore.map((prd: CartItemModel) => {
+        return new CartItemModel(prd);
       })
     );
 
@@ -60,9 +60,9 @@ const CartPage = () => {
   return (
     <>
       <Header cartQuantity={cart.calcTotalProduct()} />
-      <main className='main'>
-        <div className='cart-page'>
-          <div className='container'>
+      <main className="main">
+        <div className="cart-page">
+          <div className="container">
             {/* <a className='btn back-link' href='/'>
               Back Home
             </a>
@@ -73,11 +73,11 @@ const CartPage = () => {
               />
               <div />
             </div> */}
-            <Link className='back-link' to='/'>
+            <Link className="back-link" to="/">
               Back Home
             </Link>
-            <table className='table'>
-              <thead className='thead'>
+            <table className="table">
+              <thead className="thead">
                 <tr>
                   <th>ID</th>
                   <th>Name</th>
@@ -87,60 +87,20 @@ const CartPage = () => {
                   <th></th>
                 </tr>
               </thead>
-              <tbody className='tbody'>
-                {cart.listProduct.map((item) => {
+              <tbody className="tbody">
+                {cart.listProduct.map((item: CartItemModel) => {
                   return (
-                    <tr className='product-item' key={item.id}>
-                      <td>{item.id}</td>
-                      <td>{item.name}</td>
-                      <td>
-                        <img
-                          className='product-image'
-                          src={item.image}
-                          alt=''
-                        />
-                      </td>
-                      <td>
-                        <div className='actions'>
-                          <button
-                            className='btn-minus'
-                            onClick={() =>
-                              handleChangeQuantity(
-                                item.id,
-                                CartItemAction.DECREASE
-                              )
-                            }>
-                            -
-                          </button>
-                          <span className='product-quantity'>
-                            {item.quantity}
-                          </span>
-                          <button
-                            className='btn-plus'
-                            onClick={() =>
-                              handleChangeQuantity(
-                                item.id,
-                                CartItemAction.INCREASE
-                              )
-                            }>
-                            +
-                          </button>
-                        </div>
-                      </td>
-                      <td className='product-total'>{item.calcTotalPrice()}</td>
-                      <td>
-                        <button
-                          className='btn-delete'
-                          onClick={() => deleteProduct(item.id)}>
-                          Xóa
-                        </button>
-                      </td>
-                    </tr>
+                    <CartItem
+                      key={item.id}
+                      cartItemData={item}
+                      handleChangeQuantity={handleChangeQuantity}
+                      deleteProduct={deleteProduct}
+                    />
                   );
                 })}
               </tbody>
             </table>
-            <span className='cart-total-price btn btn-primary'>
+            <span className="cart-total-price btn btn-primary">
               TOTAL: {cart.calcTotalPrice()}
             </span>
           </div>

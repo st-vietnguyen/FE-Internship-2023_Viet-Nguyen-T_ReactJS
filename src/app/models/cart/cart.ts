@@ -1,6 +1,15 @@
-import { CartItemType } from './cart.interface.js';
+import { ProductProps } from '../product/product.interface.js';
 
-export class CartItem implements CartItemType {
+export interface CartItemType extends Omit<ProductProps, 'status'> {
+  quantity: number;
+}
+
+export enum CartItemAction {
+  INCREASE = 'Increase',
+  DECREASE = 'Decrease',
+}
+
+export class CartItemModel implements CartItemType {
   id: number;
   name: string;
   price: number;
@@ -23,15 +32,15 @@ export class CartItem implements CartItemType {
       ? this.price - (this.price * this.discount) / 100
       : this.price;
   };
-  calcTotalPrice = () : string => {
-    return (this.price * this.quantity).toFixed(2);
+  calcTotalPrice = (): string => {
+    return (this.calcDiscountPrice() * this.quantity).toFixed(2);
   };
 }
 
 class Cart {
-  listProduct: CartItem[];
+  listProduct: CartItemModel[];
 
-  constructor(listProduct: CartItem[]) {
+  constructor(listProduct: CartItemModel[]) {
     this.listProduct = listProduct;
   }
 
@@ -44,7 +53,7 @@ class Cart {
   calcTotalPrice = (): string => {
     let total: number = this.listProduct.reduce(
       (acc: number, cur: CartItemType) =>
-        acc + new CartItem(cur).calcDiscountPrice() * cur.quantity,
+        acc + Number.parseFloat(new CartItemModel(cur).calcTotalPrice()),
       0
     );
     return total.toFixed(2);

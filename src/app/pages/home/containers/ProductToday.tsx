@@ -1,5 +1,5 @@
-import { ProductProps } from '../../models/product/product.interface';
-import ProductList from './ProductList';
+import { ProductProps } from '../../../models/product/product.interface';
+import ProductList from '../components/ProductList';
 
 interface productProps {
   addToCart : (product : ProductProps)  => void
