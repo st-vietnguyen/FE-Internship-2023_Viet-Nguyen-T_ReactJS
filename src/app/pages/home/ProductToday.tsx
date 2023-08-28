@@ -1,13 +1,18 @@
+import { ProductProps } from '../../models/product/product.interface';
 import ProductList from './ProductList';
 
-function ProductToday() {
+interface productProps {
+  addToCart : (product : ProductProps)  => void
+}
+
+function ProductToday({ addToCart  } : productProps ) {
   return (
-    <section className='section section-new-products'>
-      <div className='container'>
-        <div className='section-header'>
-          <h3 className='section-title'>Products in today</h3>
+    <section className="section section-new-products">
+      <div className="container">
+        <div className="section-header">
+          <h3 className="section-title">Products in today</h3>
         </div>
-        <ProductList />
+        <ProductList addToCart={addToCart} />
       </div>
     </section>
   );

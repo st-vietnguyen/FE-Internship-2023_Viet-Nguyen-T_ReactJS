@@ -4,14 +4,21 @@ import data from '../../shared/data/data';
 import ProductModel from '../../models/product/product.entity';
 import { CartItem } from '../../models/cart/cart.entity';
 import {
+  StorageKey,
   getDataFromLocalStorage,
   saveDataToLocalStorage,
 } from '../../shared/services/localStorage.service';
 import { ProductProps } from '../../models/product/product.interface';
 
-function ProductList() {
+interface productProps {
+  addToCart: (product: ProductProps) => void;
+}
+
+function ProductList({ addToCart }: productProps) {
   const [products, setProducts] = useState<ProductModel[]>();
-  const [cart, setCart] = useState<CartItem[]>(getDataFromLocalStorage('cart'));
+  const [cart, setCart] = useState<CartItem[]>(
+    getDataFromLocalStorage(StorageKey.CART)
+  );
   useEffect(() => {
     setProducts(
       data.map((item) => {
@@ -20,25 +27,25 @@ function ProductList() {
     );
   }, []);
   useEffect(() => {
-    saveDataToLocalStorage('cart', cart);
+    saveDataToLocalStorage(StorageKey.CART, cart);
   }, [cart]);
-  const addToCart = (product: ProductProps) => {
-    let findProduct = cart.find((item) => {
-      return item.id === product.id;
-    });
-    if (findProduct) {
-      findProduct.quantity += 1;
-      setCart([...cart]);
-    } else {
-      setCart([...cart, new CartItem({ ...product, quantity: 1 })]);
-    }
-  };
+  // const addToCart = (product: ProductProps) => {
+  //   let findProduct = cart.find((item) => {
+  //     return item.id === product.id;
+  //   });
+  //   if (findProduct) {
+  //     findProduct.quantity += 1;
+  //     setCart([...cart]);
+  //   } else {
+  //     setCart([...cart, new CartItem({ ...product, quantity: 1 })]);
+  //   }
+  // };
   return (
-    <ul className='product-list row'>
+    <ul className="product-list row">
       {products?.map((prd) => {
         return (
-          <li className='product-item col-3 col col-md-6' key={prd.id}>
-            <a onClick={(e) => e.preventDefault()} className='product-link'>
+          <li className="product-item col-3 col col-md-6" key={prd.id}>
+            <a onClick={(e) => e.preventDefault()} className="product-link">
               <Product product={prd} addToCart={addToCart} />
             </a>
           </li>

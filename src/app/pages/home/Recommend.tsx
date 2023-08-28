@@ -1,6 +1,11 @@
+import { ProductProps } from '../../models/product/product.interface';
 import ProductList from './ProductList';
 
-function Recommend() {
+interface productProps {
+  addToCart : (product : ProductProps)  => void
+}
+
+function Recommend({addToCart} : productProps) {
   return (
     <section className='section section-products'>
       <div className='container'>
@@ -10,7 +15,7 @@ function Recommend() {
             Show more
           </a>
         </div>
-        <ProductList />
+        <ProductList addToCart={addToCart} />
       </div>
     </section>
   );

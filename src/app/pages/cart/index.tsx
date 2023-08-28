@@ -2,14 +2,16 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../../shared/components/Header';
 import {
+  StorageKey,
   getDataFromLocalStorage,
   saveDataToLocalStorage,
 } from '../../shared/services/localStorage.service';
 import Cart, { CartItem } from '../../models/cart/cart.entity';
+import { CartItemAction } from '../../models/cart/cart.interface';
 
 const CartPage = () => {
   const [cart, setCart] = useState<Cart>(() => {
-    const cartStore = getDataFromLocalStorage('cart');
+    const cartStore = getDataFromLocalStorage(StorageKey.CART);
     const cartData = new Cart(
       cartStore.map((prd: CartItem) => {
         return new CartItem(prd);
@@ -19,7 +21,7 @@ const CartPage = () => {
     return cartData;
   });
   useEffect(() => {
-    saveDataToLocalStorage('cart', cart.listProduct);
+    saveDataToLocalStorage(StorageKey.CART, cart.listProduct);
   }, [cart]);
 
   const handleChangeQuantity = (productId: number, action: string) => {
@@ -28,10 +30,10 @@ const CartPage = () => {
     });
     if (productFind) {
       switch (action) {
-        case 'Increase':
+        case CartItemAction.INCREASE:
           productFind.quantity += 1;
           break;
-        case 'Decrease':
+        case CartItemAction.DECREASE:
           productFind.quantity -= 1;
           if (productFind.quantity === 0) {
             deleteProduct(productId);
@@ -57,7 +59,7 @@ const CartPage = () => {
 
   return (
     <>
-      <Header />
+      <Header cartQuantity={cart.calcTotalProduct()} />
       <main className='main'>
         <div className='cart-page'>
           <div className='container'>
@@ -103,7 +105,10 @@ const CartPage = () => {
                           <button
                             className='btn-minus'
                             onClick={() =>
-                              handleChangeQuantity(item.id, 'Decrease')
+                              handleChangeQuantity(
+                                item.id,
+                                CartItemAction.DECREASE
+                              )
                             }>
                             -
                           </button>
@@ -113,7 +118,10 @@ const CartPage = () => {
                           <button
                             className='btn-plus'
                             onClick={() =>
-                              handleChangeQuantity(item.id, 'Increase')
+                              handleChangeQuantity(
+                                item.id,
+                                CartItemAction.INCREASE
+                              )
                             }>
                             +
                           </button>

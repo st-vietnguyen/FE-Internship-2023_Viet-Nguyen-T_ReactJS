@@ -1,6 +1,9 @@
 import { useLocation, Link } from 'react-router-dom';
 
-const Header = () => {
+interface headerProps {
+  cartQuantity : number
+}
+const Header = ({ cartQuantity   } : headerProps) => {
   const location = useLocation();
 
   return (
@@ -44,7 +47,7 @@ const Header = () => {
             </li>
             <li className='action-item'>
               <Link className='action-link' to='/cart'>
-                <div className='cart-quantity'></div>
+                <div className='cart-quantity'>{cartQuantity}</div>
                 <i className='icon icon-cart'></i>
               </Link>
             </li>
