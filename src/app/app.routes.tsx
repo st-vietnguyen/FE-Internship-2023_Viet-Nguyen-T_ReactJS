@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode } from 'react';
+import { ReactElement } from 'react';
 import Cart from './pages/cart';
 import Home from './pages/home';
 

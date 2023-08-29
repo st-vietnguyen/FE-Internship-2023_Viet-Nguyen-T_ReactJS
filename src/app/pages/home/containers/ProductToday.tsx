@@ -2,10 +2,10 @@ import { ProductProps } from '../../../models/product/product.interface';
 import ProductList from '../components/ProductList';
 
 interface productProps {
-  addToCart : (product : ProductProps)  => void
+  addToCart: (product: ProductProps) => void;
 }
 
-function ProductToday({ addToCart  } : productProps ) {
+const ProductToday = ({ addToCart }: productProps) => {
   return (
     <section className="section section-new-products">
       <div className="container">
@@ -16,6 +16,6 @@ function ProductToday({ addToCart  } : productProps ) {
       </div>
     </section>
   );
-}
+};
 
 export default ProductToday;

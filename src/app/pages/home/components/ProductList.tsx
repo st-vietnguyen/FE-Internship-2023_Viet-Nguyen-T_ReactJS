@@ -2,23 +2,15 @@ import { useState, useEffect } from 'react';
 import Product from '../../../shared/components/Product';
 import data from '../../../shared/data/data';
 import ProductModel from '../../../models/product/product.entity';
-import { CartItemModel } from '../../../models/cart/cart';
-import {
-  StorageKey,
-  getDataFromLocalStorage,
-  saveDataToLocalStorage,
-} from '../../../shared/services/localStorage.service';
 import { ProductProps } from '../../../models/product/product.interface';
 
 interface productProps {
   addToCart: (product: ProductProps) => void;
 }
 
-function ProductList({ addToCart }: productProps) {
+const ProductList = ({ addToCart }: productProps) => {
   const [products, setProducts] = useState<ProductModel[]>();
-  const [cart, setCart] = useState<CartItemModel[]>(
-    getDataFromLocalStorage(StorageKey.CART)
-  );
+
   useEffect(() => {
     setProducts(
       data.map((item) => {
@@ -26,20 +18,7 @@ function ProductList({ addToCart }: productProps) {
       })
     );
   }, []);
-  useEffect(() => {
-    saveDataToLocalStorage(StorageKey.CART, cart);
-  }, [cart]);
-  // const addToCart = (product: ProductProps) => {
-  //   let findProduct = cart.find((item) => {
-  //     return item.id === product.id;
-  //   });
-  //   if (findProduct) {
-  //     findProduct.quantity += 1;
-  //     setCart([...cart]);
-  //   } else {
-  //     setCart([...cart, new CartItem({ ...product, quantity: 1 })]);
-  //   }
-  // };
+
   return (
     <ul className="product-list row">
       {products?.map((prd) => {
@@ -53,6 +32,6 @@ function ProductList({ addToCart }: productProps) {
       })}
     </ul>
   );
-}
+};
 
 export default ProductList;

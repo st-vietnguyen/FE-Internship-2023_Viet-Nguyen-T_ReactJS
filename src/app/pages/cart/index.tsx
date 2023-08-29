@@ -9,17 +9,20 @@ import {
 import Cart, { CartItemAction, CartItemModel } from '../../models/cart/cart';
 import CartItem from './components/CartItem';
 
-const CartPage = () => {
-  const [cart, setCart] = useState<Cart>(() => {
-    const cartStore = getDataFromLocalStorage(StorageKey.CART);
-    const cartData = new Cart(
-      cartStore.map((prd: CartItemModel) => {
-        return new CartItemModel(prd);
-      })
-    );
+const getDataCart = (): Cart => {
+  const cartStore = getDataFromLocalStorage(StorageKey.CART);
+  const cartData = new Cart(
+    cartStore.map((prd: CartItemModel) => {
+      return new CartItemModel(prd);
+    })
+  );
 
-    return cartData;
-  });
+  return cartData;
+};
+
+const CartPage = () => {
+  const [cart, setCart] = useState<Cart>(getDataCart);
+
   useEffect(() => {
     saveDataToLocalStorage(StorageKey.CART, cart.listProduct);
   }, [cart]);
@@ -59,50 +62,56 @@ const CartPage = () => {
 
   return (
     <>
-      <Header cartQuantity={cart.calcTotalProduct()} />
       <main className="main">
         <div className="cart-page">
           <div className="container">
-            {/* <a className='btn back-link' href='/'>
-              Back Home
-            </a>
-            <div className='sold-out-wrapper'>
-              <img
-                className='sold-out-image'
-                src='../assets/images/sold-out.png'
-              />
-              <div />
-            </div> */}
-            <Link className="back-link" to="/">
-              Back Home
-            </Link>
-            <table className="table">
-              <thead className="thead">
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Image</th>
-                  <th>Quantity</th>
-                  <th>Total</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody className="tbody">
-                {cart.listProduct.map((item: CartItemModel) => {
-                  return (
-                    <CartItem
-                      key={item.id}
-                      cartItemData={item}
-                      handleChangeQuantity={handleChangeQuantity}
-                      deleteProduct={deleteProduct}
-                    />
-                  );
-                })}
-              </tbody>
-            </table>
-            <span className="cart-total-price btn btn-primary">
-              TOTAL: {cart.calcTotalPrice()}
-            </span>
+            {cart.listProduct.length === 0 ? (
+              <>
+                <a className="btn back-link" href="/">
+                  Back Home
+                </a>
+                <div className="sold-out-wrapper">
+                  <img
+                    className="sold-out-image"
+                    src={require('../../../assets/images/sold-out.png')}
+                  />
+                  <div />
+                </div>
+              </>
+            ) : (
+              <>
+                <Link className="back-link" to="/">
+                  Back Home
+                </Link>
+                <table className="table">
+                  <thead className="thead">
+                    <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Image</th>
+                      <th>Quantity</th>
+                      <th>Total</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody className="tbody">
+                    {cart.listProduct.map((item: CartItemModel) => {
+                      return (
+                        <CartItem
+                          key={item.id}
+                          cartItemData={item}
+                          handleChangeQuantity={handleChangeQuantity}
+                          deleteProduct={deleteProduct}
+                        />
+                      );
+                    })}
+                  </tbody>
+                </table>
+                <span className="cart-total-price btn btn-primary">
+                  TOTAL: {cart.calcTotalPrice()}
+                </span>
+              </>
+            )}
           </div>
         </div>
       </main>
