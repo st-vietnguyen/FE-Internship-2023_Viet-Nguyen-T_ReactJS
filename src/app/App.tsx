@@ -1,18 +1,45 @@
+import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
+
 import routes from './app.routes';
-import Home from './pages/home';
+import { CartItemModel } from './models/cart/cart';
+import {
+  StorageKey,
+  getDataFromLocalStorage,
+  saveDataToLocalStorage,
+} from './shared/services/localStorage.service';
+
 import '../stylesheet/scss/style.scss';
+import Header from './shared/components/Header';
+import Home from './pages/home';
+import Footer from './shared/components/Footer';
+import CartPage from './pages/cart';
 
 function App() {
+  const [cart, setCart] = useState<CartItemModel[]>(() => {
+    return getDataFromLocalStorage(StorageKey.CART);
+  });
+
+  useEffect(() => {
+    saveDataToLocalStorage(StorageKey.CART, cart);
+  }, [cart]);
+
+  const updateCart = (newCart: CartItemModel[]) => {
+    setCart([...newCart]);
+  };
   return (
-    <div className='App'>
+    <div className="App">
+      <Header cart={cart} />
       <Routes>
-        {routes.map((item) => {
-          return (
-            <Route key={item.name} path={item.path} element={item.component} />
-          );
-        })}
+        <Route
+          path="/"
+          element={<Home cart={cart} updateCart={updateCart} />}></Route>
+        <Route
+          path="/cart"
+          element={<CartPage updateCart={updateCart} cart={cart} />}
+        />
       </Routes>
+      <Footer />
     </div>
   );
 }

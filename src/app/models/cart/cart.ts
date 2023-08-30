@@ -1,6 +1,6 @@
-import { ProductProps } from '../product/product.interface.js';
+import { PRODUCT_STATUS, ProductProps } from '../product/product.interface.js';
 
-export interface CartItemType extends Omit<ProductProps, 'status'> {
+export interface CartItemType extends ProductProps {
   quantity: number;
 }
 
@@ -16,15 +16,17 @@ export class CartItemModel implements CartItemType {
   image: string;
   discount: number;
   quantity: number;
+  status: PRODUCT_STATUS;
 
   constructor(cartItem: CartItemType) {
-    const { id, name, price, image, discount, quantity } = cartItem;
+    const { id, name, price, image, discount, quantity, status } = cartItem;
     this.id = id;
     this.name = name;
     this.price = price;
     this.image = image;
     this.discount = discount || 0;
     this.quantity = quantity;
+    this.status = status;
   }
 
   calcDiscountPrice = (): number => {
@@ -45,15 +47,15 @@ class Cart {
   }
 
   calcTotalProduct = (): number => {
-    let total = this.listProduct.reduce((acc: number, cur: CartItemType) => {
+    let total = this.listProduct.reduce((acc: number, cur: CartItemModel) => {
       return acc + cur.quantity;
     }, 0);
     return total;
   };
   calcTotalPrice = (): string => {
     let total: number = this.listProduct.reduce(
-      (acc: number, cur: CartItemType) =>
-        acc + Number.parseFloat(new CartItemModel(cur).calcTotalPrice()),
+      (acc: number, cur: CartItemModel) =>
+        acc + Number.parseFloat(cur.calcTotalPrice()),
       0
     );
     return total.toFixed(2);

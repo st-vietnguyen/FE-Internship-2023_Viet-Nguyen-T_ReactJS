@@ -1,16 +1,34 @@
-import { CartItemAction, CartItemModel } from '../../../models/cart/cart';
+import { CartItemModel } from '../../../models/cart/cart';
+import { CartService } from '../../../shared/services/cart.services';
 
 interface CartItemProps {
+  cart: CartItemModel[];
   cartItemData: CartItemModel;
-  handleChangeQuantity: (productId: number, action: CartItemAction) => void;
-  deleteProduct: (productId: number) => void;
+  updateCart: (cart: CartItemModel[]) => void;
 }
 
-const CartItem = ({
-  cartItemData,
-  handleChangeQuantity,
-  deleteProduct,
-}: CartItemProps) => {
+const CartItem = ({ cart, cartItemData, updateCart }: CartItemProps) => {
+  const cartService = new CartService();
+  const handleChangeQuantity = (
+    cart: CartItemModel[],
+    product: CartItemModel,
+    newQuantity: number
+  ) => {
+    if (newQuantity > 0) {
+      updateCart(cartService.changeQuantity(cart, product, newQuantity));
+    } else {
+      let isConfirm = window.confirm('Are you want to delete product ?');
+      if (isConfirm) {
+        updateCart(cartService.deleteProduct(cart, cartItemData.id));
+      }
+    }
+  };
+  const deleteProduct = (cart: CartItemModel[], productId: number) => {
+    let isConfirm = window.confirm('Are you want to delete product ?');
+    if (isConfirm) {
+      updateCart(cartService.deleteProduct(cart, productId));
+    }
+  };
   return (
     <tr className="product-item" key={cartItemData.id}>
       <td>{cartItemData.id}</td>
@@ -23,7 +41,11 @@ const CartItem = ({
           <button
             className="btn-minus"
             onClick={() =>
-              handleChangeQuantity(cartItemData.id, CartItemAction.DECREASE)
+              handleChangeQuantity(
+                cart,
+                cartItemData,
+                cartItemData.quantity - 1
+              )
             }>
             -
           </button>
@@ -31,7 +53,11 @@ const CartItem = ({
           <button
             className="btn-plus"
             onClick={() =>
-              handleChangeQuantity(cartItemData.id, CartItemAction.INCREASE)
+              handleChangeQuantity(
+                cart,
+                cartItemData,
+                cartItemData.quantity + 1
+              )
             }>
             +
           </button>
@@ -41,7 +67,7 @@ const CartItem = ({
       <td>
         <button
           className="btn-delete"
-          onClick={() => deleteProduct(cartItemData.id)}>
+          onClick={() => deleteProduct(cart, cartItemData.id)}>
           Xóa
         </button>
       </td>
