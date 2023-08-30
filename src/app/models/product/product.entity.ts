@@ -1,4 +1,4 @@
-import { ProductProps } from './product.interface.js';
+import { PRODUCT_STATUS, ProductProps } from './product.interface.js';
 
 class ProductModel implements ProductProps {
   id: number;
@@ -6,7 +6,7 @@ class ProductModel implements ProductProps {
   price: number;
   image: string;
   discount: number;
-  status: 0 | 1;
+  status: PRODUCT_STATUS;
 
   constructor(product: ProductProps) {
     const { id, name, price, image, discount, status } = product;

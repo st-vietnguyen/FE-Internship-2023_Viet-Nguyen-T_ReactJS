@@ -1,83 +1,24 @@
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../../shared/components/Header';
-import {
-  StorageKey,
-  getDataFromLocalStorage,
-  saveDataToLocalStorage,
-} from '../../shared/services/localStorage.service';
-import Cart, { CartItemAction, CartItemModel } from '../../models/cart/cart';
-import CartItem from './components/CartItem';
+import { CartItemModel } from '../../models/cart/cart';
+import { CartService } from '../../shared/services/cart.services';
+import CartList from './components/CartList';
+import CartEmpty from './components/CartEmpty';
 
-const getDataCart = (): Cart => {
-  const cartStore = getDataFromLocalStorage(StorageKey.CART);
-  const cartData = new Cart(
-    cartStore.map((prd: CartItemModel) => {
-      return new CartItemModel(prd);
-    })
-  );
+interface cartPageProps {
+  cart: CartItemModel[];
+  updateCart: (cart: CartItemModel[]) => void;
+}
 
-  return cartData;
-};
-
-const CartPage = () => {
-  const [cart, setCart] = useState<Cart>(getDataCart);
-
-  useEffect(() => {
-    saveDataToLocalStorage(StorageKey.CART, cart.listProduct);
-  }, [cart]);
-
-  const handleChangeQuantity = (productId: number, action: string) => {
-    let productFind = cart.listProduct.find((item) => {
-      return productId === item.id;
-    });
-    if (productFind) {
-      switch (action) {
-        case CartItemAction.INCREASE:
-          productFind.quantity += 1;
-          break;
-        case CartItemAction.DECREASE:
-          productFind.quantity -= 1;
-          if (productFind.quantity === 0) {
-            deleteProduct(productId);
-            return;
-          }
-          break;
-        default:
-          break;
-      }
-    }
-    setCart({ ...cart });
-  };
-  const deleteProduct = (productId: number) => {
-    if (window.confirm('Are you sure ?')) {
-      setCart({
-        ...cart,
-        listProduct: cart.listProduct.filter((item) => {
-          return item.id !== productId;
-        }),
-      });
-    }
-  };
+const CartPage = ({ cart, updateCart }: cartPageProps) => {
+  const cartService = new CartService();
 
   return (
     <>
       <main className="main">
         <div className="cart-page">
           <div className="container">
-            {cart.listProduct.length === 0 ? (
-              <>
-                <a className="btn back-link" href="/">
-                  Back Home
-                </a>
-                <div className="sold-out-wrapper">
-                  <img
-                    className="sold-out-image"
-                    src={require('../../../assets/images/sold-out.png')}
-                  />
-                  <div />
-                </div>
-              </>
+            {cart.length === 0 ? (
+              <CartEmpty />
             ) : (
               <>
                 <Link className="back-link" to="/">
@@ -95,20 +36,11 @@ const CartPage = () => {
                     </tr>
                   </thead>
                   <tbody className="tbody">
-                    {cart.listProduct.map((item: CartItemModel) => {
-                      return (
-                        <CartItem
-                          key={item.id}
-                          cartItemData={item}
-                          handleChangeQuantity={handleChangeQuantity}
-                          deleteProduct={deleteProduct}
-                        />
-                      );
-                    })}
+                    <CartList cart={cart} updateCart={updateCart} />
                   </tbody>
                 </table>
                 <span className="cart-total-price btn btn-primary">
-                  TOTAL: {cart.calcTotalPrice()}
+                  TOTAL: {cartService.calcTotalPrice(cart)}
                 </span>
               </>
             )}
