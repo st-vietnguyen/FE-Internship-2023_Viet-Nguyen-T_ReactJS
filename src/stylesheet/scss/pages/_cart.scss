@@ -1,4 +1,5 @@
 .cart-page {
+  padding: 20px 0;
   .table .product-image {
     width: 100px;
     height: 100px;
@@ -25,6 +26,9 @@
     border: none;
     outline: none;
     border-radius: 6px;
+    &:hover {
+      background-color: map-get($color, primary-hover);
+    }
   }
   .btn-plus,
   .btn-minus {
@@ -60,6 +64,14 @@
     font-size: 18px;
     &:hover {
       color: map-get($color, primary);
+    }
+  }
+  .checkout {
+    padding: 20px;
+    &-title {
+      color: map-get($color, primary);
+      font-weight: map-get($font-weight, bold);
+      text-align: center;
     }
   }
 }
