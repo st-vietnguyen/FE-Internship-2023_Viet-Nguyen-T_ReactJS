@@ -1,32 +1,33 @@
+import { useDispatch } from 'react-redux';
+
 import { CartItemModel } from '../../../models/cart/cart';
-import { CartService } from '../../../shared/services/cart.services';
+import { changeQuantity, deleteProduct } from '../../../../redux/actions/cartActions';
 
 interface CartItemProps {
   cart: CartItemModel[];
   cartItemData: CartItemModel;
-  updateCart: (cart: CartItemModel[]) => void;
 }
 
-const CartItem = ({ cart, cartItemData, updateCart }: CartItemProps) => {
-  const cartService = new CartService();
+const CartItem = ({ cartItemData }: CartItemProps) => {
+  const dispatch = useDispatch();
+
   const handleChangeQuantity = (
-    cart: CartItemModel[],
     product: CartItemModel,
     newQuantity: number
   ) => {
     if (newQuantity > 0) {
-      updateCart(cartService.changeQuantity(cart, product, newQuantity));
+      dispatch(changeQuantity(product, newQuantity));
     } else {
-      let isConfirm = window.confirm('Are you want to delete product ?');
+      let isConfirm = window.confirm('Do you want to delete this product ?');
       if (isConfirm) {
-        updateCart(cartService.deleteProduct(cart, cartItemData.id));
+        dispatch(deleteProduct(product.id));
       }
     }
   };
-  const deleteProduct = (cart: CartItemModel[], productId: number) => {
-    let isConfirm = window.confirm('Are you want to delete product ?');
+  const handleDeleteProduct = (productId: number) => {
+    let isConfirm = window.confirm('Do you want to delete this product ?');
     if (isConfirm) {
-      updateCart(cartService.deleteProduct(cart, productId));
+      dispatch(deleteProduct(productId));
     }
   };
   return (
@@ -41,11 +42,7 @@ const CartItem = ({ cart, cartItemData, updateCart }: CartItemProps) => {
           <button
             className="btn-minus"
             onClick={() =>
-              handleChangeQuantity(
-                cart,
-                cartItemData,
-                cartItemData.quantity - 1
-              )
+              handleChangeQuantity(cartItemData, cartItemData.quantity - 1)
             }>
             -
           </button>
@@ -53,11 +50,7 @@ const CartItem = ({ cart, cartItemData, updateCart }: CartItemProps) => {
           <button
             className="btn-plus"
             onClick={() =>
-              handleChangeQuantity(
-                cart,
-                cartItemData,
-                cartItemData.quantity + 1
-              )
+              handleChangeQuantity(cartItemData, cartItemData.quantity + 1)
             }>
             +
           </button>
@@ -67,7 +60,7 @@ const CartItem = ({ cart, cartItemData, updateCart }: CartItemProps) => {
       <td>
         <button
           className="btn-delete"
-          onClick={() => deleteProduct(cart, cartItemData.id)}>
+          onClick={() => handleDeleteProduct(cartItemData.id)}>
           Xóa
         </button>
       </td>

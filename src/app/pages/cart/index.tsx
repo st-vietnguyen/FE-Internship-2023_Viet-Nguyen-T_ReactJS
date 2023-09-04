@@ -1,17 +1,29 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { CartItemModel } from '../../models/cart/cart';
+
 import { CartService } from '../../shared/services/cart.services';
 import CartList from './components/CartList';
 import CartEmpty from './components/CartEmpty';
+import { useSelector } from 'react-redux';
+import { CartItemModel } from '../../models/cart/cart';
+import {
+  StorageKey,
+  saveDataToLocalStorage,
+} from '../../shared/services/localStorage.service';
+import { AppState } from '../../../redux/reducers/reducer';
 
-interface cartPageProps {
-  cart: CartItemModel[];
-  updateCart: (cart: CartItemModel[]) => void;
-}
+const CartPage = () => {
+  const cart = useSelector((state: AppState) => {
+    return state.cart.listCartItem.map((item) => {
+      return new CartItemModel(item);
+    });
+  });
 
-const CartPage = ({ cart, updateCart }: cartPageProps) => {
   const cartService = new CartService();
 
+  useEffect(() => {
+    saveDataToLocalStorage(StorageKey.CART, cart);
+  }, [cart]);
   return (
     <>
       <main className="main">
@@ -38,7 +50,7 @@ const CartPage = ({ cart, updateCart }: cartPageProps) => {
                         </tr>
                       </thead>
                       <tbody className="tbody">
-                        <CartList cart={cart} updateCart={updateCart} />
+                        <CartList cart={cart} />
                       </tbody>
                     </table>
                   </div>

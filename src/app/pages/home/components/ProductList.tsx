@@ -1,21 +1,38 @@
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import Product from '../../../shared/components/Product';
-import { CartItemModel } from '../../../models/cart/cart';
+import { setProducts } from '../../../../redux/actions/productActions';
+import { AppState } from '../../../../redux/reducers/reducer';
 import ProductModel from '../../../models/product/product.entity';
 
-interface ProductListProps {
-  cart: CartItemModel[];
-  updateCart: (cart: CartItemModel[]) => void;
-  products: ProductModel[];
-}
+const ProductList = () => {
+  // const [products, setProducts] = useState<ProductModel[]>();
+  const products = useSelector((state: AppState) =>
+    state.products.products.map((item) => new ProductModel(item))
+  );
+  const dispatch = useDispatch();
 
-const ProductList = ({ cart, updateCart, products }: ProductListProps) => {
+  const fetchProducts = () => {
+    fetch('data.json')
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch(setProducts(data));
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   return (
     <ul className="product-list row">
       {products?.map((prd) => {
         return (
           <li className="product-item col-3 col col-md-6" key={prd.id}>
             <a onClick={(e) => e.preventDefault()} className="product-link">
-              <Product product={prd} cart={cart} updateCart={updateCart} />
+              <Product product={prd} />
             </a>
           </li>
         );

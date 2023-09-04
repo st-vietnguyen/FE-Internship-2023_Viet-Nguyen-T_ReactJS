@@ -3,21 +3,13 @@ import CartItem from './CartItem';
 
 interface cartPageProps {
   cart: CartItemModel[];
-  updateCart: (cart: CartItemModel[]) => void;
 }
 
-const CartList = ({ cart, updateCart }: cartPageProps) => {
+const CartList = ({ cart }: cartPageProps) => {
   return (
     <>
       {cart.map((item: CartItemModel) => {
-        return (
-          <CartItem
-            key={item.id}
-            cart={cart}
-            updateCart={updateCart}
-            cartItemData={new CartItemModel(item)}
-          />
-        );
+        return <CartItem key={item.id} cart={cart} cartItemData={item} />;
       })}
     </>
   );
