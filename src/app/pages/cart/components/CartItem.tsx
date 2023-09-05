@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { CartItemModel } from '../../../models/cart/cart';
 import {
   changeQuantity,
-  deleteProduct,
+  deleteCartItem,
 } from '../../../../redux/actions/cartActions';
 
 interface CartItemProps {
@@ -17,33 +17,30 @@ const CartItem = ({ cartItemData }: CartItemProps) => {
   const [isEdit, setIsEdit] = useState(false);
   const productQuantityRef = useRef<any>(null);
 
-  const handleChangeQuantity = (
-    product: CartItemModel,
-    newQuantity: number
-  ) => {
+  const handleChangeQuantity = (productId: number, newQuantity: number) => {
     if (newQuantity > 0) {
-      dispatch(changeQuantity(product, newQuantity));
+      dispatch(changeQuantity(productId, newQuantity));
     } else {
       let isConfirm = window.confirm('Do you want to delete this product ?');
       if (isConfirm) {
-        dispatch(deleteProduct(product.id));
+        dispatch(deleteCartItem(productId));
       }
     }
   };
   const handleDeleteProduct = (productId: number) => {
     let isConfirm = window.confirm('Do you want to delete this product ?');
     if (isConfirm) {
-      dispatch(deleteProduct(productId));
+      dispatch(deleteCartItem(productId));
     }
   };
   const handleUpdateQuantity = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      handleChangeQuantity(cartItemData, productQuantityRef.current.value);
+      handleChangeQuantity(cartItemData.id, productQuantityRef.current.value);
       setIsEdit(false);
     }
   };
   const handleBlurProductQuantityInput = () => {
-    handleChangeQuantity(cartItemData, productQuantityRef.current.value);
+    handleChangeQuantity(cartItemData.id, productQuantityRef.current.value);
     setIsEdit(false);
   };
   return (
@@ -58,7 +55,7 @@ const CartItem = ({ cartItemData }: CartItemProps) => {
           <button
             className="btn-minus"
             onClick={() =>
-              handleChangeQuantity(cartItemData, cartItemData.quantity - 1)
+              handleChangeQuantity(cartItemData.id, cartItemData.quantity - 1)
             }>
             -
           </button>
@@ -82,7 +79,7 @@ const CartItem = ({ cartItemData }: CartItemProps) => {
           <button
             className="btn-plus"
             onClick={() =>
-              handleChangeQuantity(cartItemData, cartItemData.quantity + 1)
+              handleChangeQuantity(cartItemData.id, cartItemData.quantity + 1)
             }>
             +
           </button>

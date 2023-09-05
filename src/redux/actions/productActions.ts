@@ -1,8 +1,8 @@
-import { SET_PRODUCTS } from '../types/productTypes';
+import { GET_PRODUCTS } from '../types/productTypes';
 
-export const setProducts = (products: any) => {
+export const getProducts = (products: any) => {
   return {
-    type: SET_PRODUCTS,
+    type: GET_PRODUCTS,
     payload: {
       products,
     },
@@ -14,6 +14,6 @@ export const fetchProducts = () => async (dispatch: any) => {
     const response = await fetch('data.json');
     const data = await response.json();
 
-    dispatch(setProducts(data));
+    dispatch(getProducts(data));
   } catch (err) {}
 };

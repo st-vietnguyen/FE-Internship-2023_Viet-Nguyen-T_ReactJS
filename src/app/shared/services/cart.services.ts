@@ -30,11 +30,11 @@ export class CartService {
   };
   changeQuantity = (
     cart: CartItemModel[],
-    product: CartItemModel,
+    productId: number,
     newQuantity: number
   ) => {
     const prd = cart.find((item) => {
-      return product.id === item.id;
+      return productId === item.id;
     });
 
     if (prd) {

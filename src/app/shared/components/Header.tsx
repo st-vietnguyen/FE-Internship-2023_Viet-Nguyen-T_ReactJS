@@ -7,8 +7,7 @@ const Header = () => {
   const cartService = new CartService();
   const location = useLocation();
   const cartState = useSelector((state: AppState) => state.cart.listCartItem);
-  console.log(cartService.calcTotalProduct(cartState));
-
+  
   return (
     <header
       className={`header ${

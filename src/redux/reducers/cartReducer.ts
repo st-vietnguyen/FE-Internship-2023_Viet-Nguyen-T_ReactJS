@@ -1,5 +1,4 @@
 import { CartItemModel } from '../../app/models/cart/cart';
-import ProductModel from '../../app/models/product/product.entity';
 import { ActionType } from '../../app/models/redux/action.interface';
 import {
   StorageKey,
@@ -7,7 +6,7 @@ import {
 } from '../../app/shared/services/localStorage.service';
 import {
   ADD_TO_CART,
-  CHANGE_QUANTITY,
+  CHANGE_QUANTITY_CART_ITEM,
   DELETE_CART_ITEM,
 } from '../types/cartTypes';
 import { CartService } from '../../app/shared/services/cart.services';
@@ -35,10 +34,10 @@ export const cartReducer = (
         listCartItem: [...newCart],
       };
     },
-    [CHANGE_QUANTITY]: () => {
+    [CHANGE_QUANTITY_CART_ITEM]: () => {
       let newCart = cartService.changeQuantity(
         state.listCartItem,
-        action.payload.product,
+        action.payload.productId,
         action.payload.newQuantity
       );
       return {

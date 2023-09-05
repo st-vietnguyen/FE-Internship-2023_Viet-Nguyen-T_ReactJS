@@ -1,6 +1,6 @@
 import { ProductProps } from '../../app/models/product/product.interface';
 import { ActionType } from '../../app/models/redux/action.interface';
-import { SET_PRODUCTS } from '../types/productTypes';
+import { GET_PRODUCTS } from '../types/productTypes';
 
 export interface ProductsState {
   products: ProductProps[];
@@ -15,7 +15,7 @@ export const productReducer = (
   action: ActionType
 ): ProductsState => {
   const objReducer: Record<string, () => ProductsState> = {
-    [SET_PRODUCTS]: () => {
+    [GET_PRODUCTS]: () => {
       return {
         ...state,
         products: action.payload.products,

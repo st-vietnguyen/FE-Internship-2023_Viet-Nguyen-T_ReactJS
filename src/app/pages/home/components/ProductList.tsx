@@ -4,13 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import Product from '../../../shared/components/Product';
 import {
   fetchProducts,
-  setProducts,
 } from '../../../../redux/actions/productActions';
 import { AppState } from '../../../../redux/reducers/reducer';
 import ProductModel from '../../../models/product/product.entity';
 
 const ProductList = () => {
-  // const [products, setProducts] = useState<ProductModel[]>();
   const products = useSelector((state: AppState) =>
     state.products.products.map((item) => new ProductModel(item))
   );
