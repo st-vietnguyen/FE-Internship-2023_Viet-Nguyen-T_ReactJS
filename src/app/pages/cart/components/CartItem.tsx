@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { CartItemModel } from '../../../models/cart/cart';
-import { changeQuantity, deleteProduct } from '../../../../redux/actions/cartActions';
+import {
+  changeQuantity,
+  deleteProduct,
+} from '../../../../redux/actions/cartActions';
 
 interface CartItemProps {
   cart: CartItemModel[];
@@ -11,7 +14,8 @@ interface CartItemProps {
 
 const CartItem = ({ cartItemData }: CartItemProps) => {
   const dispatch = useDispatch();
-  const [isEdit,setIsEdit] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const productQuantityRef = useRef<any>(null);
 
   const handleChangeQuantity = (
     product: CartItemModel,
@@ -32,6 +36,16 @@ const CartItem = ({ cartItemData }: CartItemProps) => {
       dispatch(deleteProduct(productId));
     }
   };
+  const handleUpdateQuantity = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleChangeQuantity(cartItemData, productQuantityRef.current.value);
+      setIsEdit(false);
+    }
+  };
+  const handleBlurProductQuantityInput = () => {
+    handleChangeQuantity(cartItemData, productQuantityRef.current.value);
+    setIsEdit(false);
+  };
   return (
     <tr className="product-item" key={cartItemData.id}>
       <td>{cartItemData.id}</td>
@@ -48,7 +62,23 @@ const CartItem = ({ cartItemData }: CartItemProps) => {
             }>
             -
           </button>
-          <span className="product-quantity">{cartItemData.quantity}</span>
+          {!isEdit ? (
+            <span
+              className="product-quantity"
+              onDoubleClick={() => setIsEdit(true)}>
+              {cartItemData.quantity}
+            </span>
+          ) : (
+            <input
+              autoFocus
+              ref={productQuantityRef}
+              className="product-quantity-input"
+              type="number"
+              defaultValue={cartItemData.quantity}
+              onKeyUp={handleUpdateQuantity}
+              onBlur={handleBlurProductQuantityInput}
+            />
+          )}
           <button
             className="btn-plus"
             onClick={() =>

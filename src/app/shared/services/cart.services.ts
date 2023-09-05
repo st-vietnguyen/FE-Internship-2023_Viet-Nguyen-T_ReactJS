@@ -24,7 +24,7 @@ export class CartService {
   };
   calcTotalProduct = (cart: CartItemModel[]): number => {
     let total = cart.reduce((acc: number, cur) => {
-      return acc + cur.quantity;
+      return acc + Number(cur.quantity);
     }, 0);
     return total;
   };
