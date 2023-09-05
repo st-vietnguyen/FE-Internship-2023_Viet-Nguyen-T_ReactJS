@@ -14,7 +14,22 @@
     padding-top: 30px;
   }
   .product-quantity {
+    cursor: context-menu;
     margin: 0 5px;
+    &-input {
+      width: 50px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      outline: none;
+      padding: 2px 4px;
+      margin: 0 10px;
+      text-align: center;
+    }
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 
   .btn-plus,

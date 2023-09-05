@@ -1,6 +1,6 @@
 .section-banner {
   position: relative;
-  background: url('../../../assets/images/banner.png') center center / cover
+  background: url('../../../../public/assets/images/banner.png') center center / cover
     no-repeat;
   height: 800px;
   .section-content-wrapper {
@@ -81,15 +81,15 @@
       opacity: 0.7;
     }
     &-item:nth-child(1) .advertisement {
-      background: url('../../../assets/images/advertisement-1.png') top center /
+      background: url('../../../../public/assets/images/advertisement-1.png') top center /
         cover no-repeat;
     }
     &-item:nth-child(2) .advertisement {
-      background: url('../../../assets/images/advertisement-2.png') top center /
+      background: url('../../../../public/assets/images/advertisement-2.png') top center /
         cover no-repeat;
     }
     &-item:nth-child(3) .advertisement {
-      background: url('../../../assets/images/advertisement-3.png') top center /
+      background: url('../../../../public/assets/images/advertisement-3.png') top center /
         cover no-repeat;
     }
     &-title {
@@ -206,15 +206,15 @@
       height: 68px;
       border-radius: 10px;
       background: map-get($color, white)
-        url('../../../assets/icons/ic-dolar-black.svg') no-repeat center center;
+        url('../../../../public/assets/icons/ic-dolar-black.svg') no-repeat center center;
     }
   }
 }
 
 .section-newsletter {
   position: relative;
-  background: url('../../../assets/images/register.png') top center / cover
-    no-repeat;
+  background: url('../../../../public/assets/images/register.png') top center /
+    cover no-repeat;
   height: 240px;
   display: flex;
   align-items: center;

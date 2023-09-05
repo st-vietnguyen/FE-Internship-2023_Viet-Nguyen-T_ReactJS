@@ -1,14 +1,6 @@
-import { CartItemModel } from '../../../models/cart/cart';
-import ProductModel from '../../../models/product/product.entity';
 import ProductList from './ProductList';
 
-interface productProps {
-  cart: CartItemModel[];
-  updateCart: (cart: CartItemModel[]) => void;
-  products: ProductModel[];
-}
-
-const Recommend = ({  cart, updateCart, products }: productProps) => {
+const Recommend = () => {
   return (
     <section className="section section-products">
       <div className="container">
@@ -18,11 +10,7 @@ const Recommend = ({  cart, updateCart, products }: productProps) => {
             Show more
           </a>
         </div>
-        <ProductList
-          cart={cart}
-          updateCart={updateCart}
-          products={products}
-        />
+        <ProductList />
       </div>
     </section>
   );

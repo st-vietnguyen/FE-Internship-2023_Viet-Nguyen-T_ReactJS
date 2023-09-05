@@ -1,33 +1,47 @@
+import { useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+
 import { CartItemModel } from '../../../models/cart/cart';
-import { CartService } from '../../../shared/services/cart.services';
+import {
+  changeQuantity,
+  deleteCartItem,
+} from '../../../../redux/actions/cartActions';
 
 interface CartItemProps {
   cart: CartItemModel[];
   cartItemData: CartItemModel;
-  updateCart: (cart: CartItemModel[]) => void;
 }
 
-const CartItem = ({ cart, cartItemData, updateCart }: CartItemProps) => {
-  const cartService = new CartService();
-  const handleChangeQuantity = (
-    cart: CartItemModel[],
-    product: CartItemModel,
-    newQuantity: number
-  ) => {
+const CartItem = ({ cartItemData }: CartItemProps) => {
+  const dispatch = useDispatch();
+  const [isEdit, setIsEdit] = useState(false);
+  const productQuantityRef = useRef<any>(null);
+
+  const handleChangeQuantity = (productId: number, newQuantity: number) => {
     if (newQuantity > 0) {
-      updateCart(cartService.changeQuantity(cart, product, newQuantity));
+      dispatch(changeQuantity(productId, newQuantity));
     } else {
-      let isConfirm = window.confirm('Are you want to delete product ?');
+      let isConfirm = window.confirm('Do you want to delete this product ?');
       if (isConfirm) {
-        updateCart(cartService.deleteProduct(cart, cartItemData.id));
+        dispatch(deleteCartItem(productId));
       }
     }
   };
-  const deleteProduct = (cart: CartItemModel[], productId: number) => {
-    let isConfirm = window.confirm('Are you want to delete product ?');
+  const handleDeleteProduct = (productId: number) => {
+    let isConfirm = window.confirm('Do you want to delete this product ?');
     if (isConfirm) {
-      updateCart(cartService.deleteProduct(cart, productId));
+      dispatch(deleteCartItem(productId));
     }
+  };
+  const handleUpdateQuantity = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleChangeQuantity(cartItemData.id, productQuantityRef.current.value);
+      setIsEdit(false);
+    }
+  };
+  const handleBlurProductQuantityInput = () => {
+    handleChangeQuantity(cartItemData.id, productQuantityRef.current.value);
+    setIsEdit(false);
   };
   return (
     <tr className="product-item" key={cartItemData.id}>
@@ -41,23 +55,31 @@ const CartItem = ({ cart, cartItemData, updateCart }: CartItemProps) => {
           <button
             className="btn-minus"
             onClick={() =>
-              handleChangeQuantity(
-                cart,
-                cartItemData,
-                cartItemData.quantity - 1
-              )
+              handleChangeQuantity(cartItemData.id, cartItemData.quantity - 1)
             }>
             -
           </button>
-          <span className="product-quantity">{cartItemData.quantity}</span>
+          {!isEdit ? (
+            <span
+              className="product-quantity"
+              onDoubleClick={() => setIsEdit(true)}>
+              {cartItemData.quantity}
+            </span>
+          ) : (
+            <input
+              autoFocus
+              ref={productQuantityRef}
+              className="product-quantity-input"
+              type="number"
+              defaultValue={cartItemData.quantity}
+              onKeyUp={handleUpdateQuantity}
+              onBlur={handleBlurProductQuantityInput}
+            />
+          )}
           <button
             className="btn-plus"
             onClick={() =>
-              handleChangeQuantity(
-                cart,
-                cartItemData,
-                cartItemData.quantity + 1
-              )
+              handleChangeQuantity(cartItemData.id, cartItemData.quantity + 1)
             }>
             +
           </button>
@@ -67,7 +89,7 @@ const CartItem = ({ cart, cartItemData, updateCart }: CartItemProps) => {
       <td>
         <button
           className="btn-delete"
-          onClick={() => deleteProduct(cart, cartItemData.id)}>
+          onClick={() => handleDeleteProduct(cartItemData.id)}>
           Xóa
         </button>
       </td>

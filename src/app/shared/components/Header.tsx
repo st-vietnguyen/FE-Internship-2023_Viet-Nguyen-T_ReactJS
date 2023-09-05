@@ -1,14 +1,13 @@
 import { useLocation, Link } from 'react-router-dom';
-import Cart, { CartItemModel } from '../../models/cart/cart';
 import { CartService } from '../services/cart.services';
+import { useSelector } from 'react-redux';
+import { AppState } from '../../../redux/reducers/reducer';
 
-interface headerProps {
-  cart: CartItemModel[];
-}
-const Header = ({ cart }: headerProps) => {
+const Header = () => {
   const cartService = new CartService();
   const location = useLocation();
-
+  const cartState = useSelector((state: AppState) => state.cart.listCartItem);
+  
   return (
     <header
       className={`header ${
@@ -19,7 +18,7 @@ const Header = ({ cart }: headerProps) => {
           <h1 className="logo">
             <Link to="/" className="logo-link">
               <img
-                src={require('../../../assets/images/Logo.png')}
+                src={'assets/images/Logo.png'}
                 alt="E-Shop"
                 className="logo-image"
               />
@@ -50,9 +49,9 @@ const Header = ({ cart }: headerProps) => {
             </li>
             <li className="action-item">
               <Link className="action-link" to="/cart">
-                {cartService.calcTotalProduct(cart) > 0 && (
+                {cartService.calcTotalProduct(cartState) > 0 && (
                   <div className="cart-quantity">
-                    {cartService.calcTotalProduct(cart)}
+                    {cartService.calcTotalProduct(cartState)}
                   </div>
                 )}
                 <i className="icon icon-cart"></i>

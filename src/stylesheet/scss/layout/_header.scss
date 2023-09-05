@@ -77,23 +77,23 @@
     padding: 20px 0;
     .logo {
       &-image {
-        content: url("../../../assets/images/Logo-ip11.png");
+        content: url("../../../../public/assets/images/Logo-ip11.png");
       }
     }
     .nav-bar {
       display: none;
     }
     .actions .icon-search {
-      background: transparent url("../../../assets/icons/ic-search-black.svg")
+      background: transparent url("../../../../public/assets/icons/ic-search-black.svg")
         no-repeat center center;
     }
     .actions .icon-cart {
-      background: transparent url("../../../assets/icons/ic-cart-black.svg")
+      background: transparent url("../../../../public/assets/icons/ic-cart-black.svg")
         no-repeat center center;
     }
 
     .actions .icon-user {
-      background: transparent url("../../../assets/icons/ic-user-black.svg")
+      background: transparent url("../../../../public/assets/icons/ic-user-black.svg")
         no-repeat center center;
     }
   }

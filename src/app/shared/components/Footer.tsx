@@ -6,7 +6,7 @@ const Footer = () => {
           <div className="shop-info col col-6 col-md-12">
             <div className="shop-info-header">
               <img
-                src={require('../../../assets/images/Logo.png')}
+                src={'assets/images/Logo.png'}
                 alt="logo"
                 className="brand-image"
               />

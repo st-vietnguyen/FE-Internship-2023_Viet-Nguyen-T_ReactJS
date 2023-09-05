@@ -1,7 +1,11 @@
 import { CartItemModel } from '../../models/cart/cart';
+import { ProductProps } from '../../models/product/product.interface';
 
 export class CartService {
-  addToCart = (cart: CartItemModel[], product: any): CartItemModel[] => {
+  addToCart = (
+    cart: CartItemModel[],
+    product: ProductProps
+  ): CartItemModel[] => {
     const prd = cart.find((item) => {
       return product.id === item.id;
     });
@@ -9,26 +13,28 @@ export class CartService {
     if (prd) {
       prd.quantity += 1;
     } else {
-      cart.push({
-        ...product,
-        quantity: 1,
-      });
+      cart.push(
+        new CartItemModel({
+          ...product,
+          quantity: 1,
+        })
+      );
     }
     return cart;
   };
   calcTotalProduct = (cart: CartItemModel[]): number => {
-    let total = cart.reduce((acc: number, cur: CartItemModel) => {
-      return acc + cur.quantity;
+    let total = cart.reduce((acc: number, cur) => {
+      return acc + Number(cur.quantity);
     }, 0);
     return total;
   };
   changeQuantity = (
     cart: CartItemModel[],
-    product: CartItemModel,
+    productId: number,
     newQuantity: number
   ) => {
     const prd = cart.find((item) => {
-      return product.id === item.id;
+      return productId === item.id;
     });
 
     if (prd) {
@@ -41,8 +47,7 @@ export class CartService {
   };
   calcTotalPrice = (cart: CartItemModel[]): string => {
     let total = cart.reduce(
-      (acc: number, cur) =>
-        acc + Number.parseFloat(new CartItemModel(cur).calcTotalPrice()),
+      (acc: number, cur) => acc + Number.parseFloat(cur.calcTotalPrice()),
       0
     );
     return total.toFixed(2);
