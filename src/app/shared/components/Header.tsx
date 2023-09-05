@@ -1,13 +1,11 @@
 import { useLocation, Link } from 'react-router-dom';
-import { CartService } from '../services/cart.services';
-import { useSelector } from 'react-redux';
-import { AppState } from '../../../redux/reducers/reducer';
 
-const Header = () => {
-  const cartService = new CartService();
+interface HeaderProps {
+  cartQuantity: number;
+}
+const Header = ({ cartQuantity }: HeaderProps) => {
   const location = useLocation();
-  const cartState = useSelector((state: AppState) => state.cart.listCartItem);
-  
+
   return (
     <header
       className={`header ${
@@ -49,10 +47,8 @@ const Header = () => {
             </li>
             <li className="action-item">
               <Link className="action-link" to="/cart">
-                {cartService.calcTotalProduct(cartState) > 0 && (
-                  <div className="cart-quantity">
-                    {cartService.calcTotalProduct(cartState)}
-                  </div>
+                {cartQuantity > 0 && (
+                  <div className="cart-quantity">{cartQuantity}</div>
                 )}
                 <i className="icon icon-cart"></i>
               </Link>

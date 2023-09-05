@@ -22,10 +22,10 @@ export const cartReducer = (
   state = initialState,
   action: ActionType
 ): CartState => {
-  let cartService = new CartService();
+  const cartService = new CartService();
   const objReducer: Record<string, () => CartState> = {
     [ADD_TO_CART]: () => {
-      let newCart = cartService.addToCart(
+      const newCart = cartService.addToCart(
         state.listCartItem,
         action.payload.product
       );
@@ -35,7 +35,7 @@ export const cartReducer = (
       };
     },
     [CHANGE_QUANTITY_CART_ITEM]: () => {
-      let newCart = cartService.changeQuantity(
+      const newCart = cartService.changeQuantity(
         state.listCartItem,
         action.payload.productId,
         action.payload.newQuantity
@@ -46,7 +46,7 @@ export const cartReducer = (
       };
     },
     [DELETE_CART_ITEM]: () => {
-      let newCart = cartService.deleteProduct(
+      const newCart = cartService.deleteProduct(
         state.listCartItem,
         action.payload.id
       );

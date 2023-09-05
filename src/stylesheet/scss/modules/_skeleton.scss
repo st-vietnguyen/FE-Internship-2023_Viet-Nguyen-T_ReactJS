@@ -1,0 +1,22 @@
+.skeleton-loader {
+  height: 400px;
+  background: linear-gradient(
+    90deg,
+    map-get($color, loader-background-color) 25%,
+    map-get($color, loader-highlight-color) 50%,
+    map-get($color, loader-background-color) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 2s infinite ease-in-out;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
