@@ -11,15 +11,15 @@
 }
 
 .icon-search {
-  background: transparent url("../../../assets/icons/ic-search.svg") no-repeat
+  background: transparent url("../../../../public/assets/icons/ic-search.svg") no-repeat
     center center;
 }
 .icon-user {
-  background: transparent url("../../../assets/icons/ic-avatar.svg") no-repeat
+  background: transparent url("../../../../public/assets/icons/ic-avatar.svg") no-repeat
     center center;
 }
 .icon-cart {
-  background: transparent url("../../../assets/icons/ic-cart.svg") no-repeat
+  background: transparent url("../../../../public/assets/icons/ic-cart.svg") no-repeat
     center center;
 }
 
@@ -32,7 +32,7 @@
 
 .icon-arrow-left {
   background: map-get($color, primary)
-    url("../../../assets/icons/ic-arrow-left.svg") no-repeat center center;
+    url("../../../../public/assets/icons/ic-arrow-left.svg") no-repeat center center;
 }
 
 .icon-smile,
@@ -45,15 +45,15 @@
 }
 
 .icon-shipping {
-  background: map-get($color, pink ) url("../../../assets/icons/ic-shipping.svg") no-repeat
+  background: map-get($color, pink ) url("../../../../public/assets/icons/ic-shipping.svg") no-repeat
     center center;
 }
 .icon-smile {
-  background: map-get($color, pink ) url("../../../assets/icons/ic-happy.svg") no-repeat center
+  background: map-get($color, pink ) url("../../../../public/assets/icons/ic-happy.svg") no-repeat center
     center;
 }
 .icon-dolar {
-  background: map-get($color, pink ) url("../../../assets/icons/ic-dolar.svg") no-repeat center
+  background: map-get($color, pink ) url("../../../../public/assets/icons/ic-dolar.svg") no-repeat center
     center;
 }
 
@@ -66,16 +66,16 @@
 }
 
 .icon-shipping-black {
-  background: map-get($color, white ) url("../../../assets/icons/ic-free-shipping.svg") no-repeat
+  background: map-get($color, white ) url("../../../../public/assets/icons/ic-free-shipping.svg") no-repeat
     center center;
 }
 
 .icon-payment {
-  background: map-get($color, white ) url("../../../assets/icons/ic-payment.svg") no-repeat center
+  background: map-get($color, white ) url("../../../../public/assets/icons/ic-payment.svg") no-repeat center
     center;
 }
 .icon-fitnest {
-  background: map-get($color, white ) url("../../../assets/icons/ic-materials.svg") no-repeat center
+  background: map-get($color, white ) url("../../../../public/assets/icons/ic-materials.svg") no-repeat center
     center;
 }
 
@@ -91,21 +91,21 @@
 
 .icon-facebook {
   background: map-get($color, primary)
-    url("../../../assets/icons/ic-facebook.svg") no-repeat center center;
+    url("../../../../public/assets/icons/ic-facebook.svg") no-repeat center center;
 }
 .icon-linkedin {
   background: map-get($color, primary)
-    url("../../../assets/icons/ic-linkedin.svg") no-repeat center center;
+    url("../../../../public/assets/icons/ic-linkedin.svg") no-repeat center center;
 }
 .icon-youtube {
-  background: map-get($color, primary) url("../../../assets/icons/ic-youtube.svg")
+  background: map-get($color, primary) url("../../../../public/assets/icons/ic-youtube.svg")
     no-repeat center center;
 }
 .icon-instagram {
   background: map-get($color, primary)
-    url("../../../assets/icons/ic-instagram.svg") no-repeat center center;
+    url("../../../../public/assets/icons/ic-instagram.svg") no-repeat center center;
 }
 .icon-twitter {
-  background: map-get($color, primary) url("../../../assets/icons/ic-twitter.svg")
+  background: map-get($color, primary) url("../../../../public/assets/icons/ic-twitter.svg")
     no-repeat center center;
 }

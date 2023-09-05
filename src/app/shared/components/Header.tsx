@@ -18,7 +18,7 @@ const Header = () => {
           <h1 className="logo">
             <Link to="/" className="logo-link">
               <img
-                src={require('../../../assets/images/Logo.png')}
+                src={'assets/images/Logo.png'}
                 alt="E-Shop"
                 className="logo-image"
               />
