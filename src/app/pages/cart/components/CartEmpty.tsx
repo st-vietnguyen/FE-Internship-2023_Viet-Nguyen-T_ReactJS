@@ -7,7 +7,7 @@ const CartEmpty = () => {
         Back Home
       </Link>
       <div className="sold-out-wrapper">
-        <img className="sold-out-image" src={'/images/sold-out.png'} />
+        <img className="sold-out-image" src={'assets/images/sold-out.png'} />
         <div />
       </div>
     </>
