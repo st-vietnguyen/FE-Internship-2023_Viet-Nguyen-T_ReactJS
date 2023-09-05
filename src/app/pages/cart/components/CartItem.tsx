@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { CartItemModel } from '../../../models/cart/cart';
@@ -10,6 +11,7 @@ interface CartItemProps {
 
 const CartItem = ({ cartItemData }: CartItemProps) => {
   const dispatch = useDispatch();
+  const [isEdit,setIsEdit] = useState(false);
 
   const handleChangeQuantity = (
     product: CartItemModel,

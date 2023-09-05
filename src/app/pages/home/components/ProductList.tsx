@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Product from '../../../shared/components/Product';
-import { setProducts } from '../../../../redux/actions/productActions';
+import {
+  fetchProducts,
+  setProducts,
+} from '../../../../redux/actions/productActions';
 import { AppState } from '../../../../redux/reducers/reducer';
 import ProductModel from '../../../models/product/product.entity';
 
@@ -11,20 +14,11 @@ const ProductList = () => {
   const products = useSelector((state: AppState) =>
     state.products.products.map((item) => new ProductModel(item))
   );
-  const dispatch = useDispatch();
-
-  const fetchProducts = () => {
-    fetch('data.json')
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch(setProducts(data));
-      })
-      .catch((err) => console.log(err));
-  };
+  const dispatch = useDispatch<any>();
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
   return (
     <ul className="product-list row">
