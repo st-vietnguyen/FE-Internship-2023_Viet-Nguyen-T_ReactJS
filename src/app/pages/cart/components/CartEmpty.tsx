@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const CartEmpty = () => {
   return (
@@ -7,10 +7,7 @@ const CartEmpty = () => {
         Back Home
       </Link>
       <div className="sold-out-wrapper">
-        <img
-          className="sold-out-image"
-          src={require('../../../../assets/images/sold-out.png')}
-        />
+        <img className="sold-out-image" src={'assets/images/sold-out.png'} />
         <div />
       </div>
     </>
