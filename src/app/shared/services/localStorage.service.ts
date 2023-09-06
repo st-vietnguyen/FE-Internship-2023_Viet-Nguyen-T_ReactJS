@@ -8,4 +8,5 @@ export const saveDataToLocalStorage = (key: string, value: Object[]): void => {
 
 export enum StorageKey {
   CART = 'cart',
+  USER = 'user',
 }

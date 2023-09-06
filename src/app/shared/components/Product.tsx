@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ProductModel from '../../models/product/product.entity';
@@ -8,6 +8,7 @@ import {
   saveDataToLocalStorage,
 } from '../services/localStorage.service';
 import { AppState } from '../../../redux/reducers/reducer';
+import { modalContext } from '../../context/ModalContext';
 
 interface productItemProps {
   product: ProductModel;
@@ -16,9 +17,14 @@ interface productItemProps {
 const Product = ({ product }: productItemProps) => {
   const dispatch = useDispatch();
   const cartState = useSelector((state: AppState) => state.cart.listCartItem);
-
+  const isLogin = useSelector((state: AppState) => state.auth.isLogin);
+  const { setIsShow } = useContext(modalContext);
   const handleAddToCart = (product: ProductModel) => {
-    dispatch(addToCart(product));
+    if (isLogin) {
+      dispatch(addToCart(product));
+    } else {
+      setIsShow(true);
+    }
   };
 
   useEffect(() => {
