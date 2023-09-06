@@ -26,19 +26,20 @@ export const productReducer = (
     [GET_PRODUCTS_REQUEST]: () => {
       return {
         ...state,
+        err: '',
         isLoading: true,
       };
     },
     [GET_PRODUCTS_SUCCESS]: () => {
       return {
-        ...state,
         products: action.payload.products,
+        err: '',
         isLoading: false,
       };
     },
     [GET_PRODUCTS_FAILED]: () => {
       return {
-        ...state,
+        products: [],
         err: action.payload.err,
         isLoading: false,
       };

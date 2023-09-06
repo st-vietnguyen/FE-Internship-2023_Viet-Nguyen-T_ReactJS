@@ -28,18 +28,11 @@ const ProductList = ({ products }: ProductListProps) => {
         )
       ) : (
         <>
-          <div className="col col-3">
-            <div className="skeleton-loader"></div>
-          </div>
-          <div className="col col-3">
-            <div className="skeleton-loader"></div>
-          </div>
-          <div className="col col-3">
-            <div className="skeleton-loader"></div>
-          </div>
-          <div className="col col-3">
-            <div className="skeleton-loader"></div>
-          </div>
+          {Array.from({ length: 4 }, (item, index) => (
+            <div className="col col-3" key={index}>
+              <div className="skeleton-loader"></div>
+            </div>
+          ))}
         </>
       )}
     </ul>

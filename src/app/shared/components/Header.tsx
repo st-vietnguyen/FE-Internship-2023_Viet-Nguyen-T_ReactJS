@@ -1,10 +1,15 @@
+import { useSelector } from 'react-redux';
 import { useLocation, Link } from 'react-router-dom';
 
-interface HeaderProps {
-  cartQuantity: number;
-}
-const Header = ({ cartQuantity }: HeaderProps) => {
+import { AppState } from '../../../redux/reducers/reducer';
+import { CartService } from '../services/cart.services';
+
+const Header = () => {
   const location = useLocation();
+  const cartService = new CartService();
+  const cartQuantity = useSelector((state: AppState) =>
+    cartService.calcTotalProduct(state.cart.listCartItem)
+  );
 
   return (
     <header

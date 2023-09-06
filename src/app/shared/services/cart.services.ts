@@ -38,7 +38,7 @@ export class CartService {
     });
 
     if (prd) {
-      prd.quantity = newQuantity;
+      prd.quantity = Number.parseInt(newQuantity.toString());
     }
     return cart;
   };
