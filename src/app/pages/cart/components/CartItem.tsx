@@ -35,13 +35,15 @@ const CartItem = ({ cartItemData }: CartItemProps) => {
   };
   const handleUpdateQuantity = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      handleChangeQuantity(cartItemData.id, productQuantityRef.current.value);
-      setIsEdit(false);
+      if (productQuantityRef.current.value > 0) {
+        handleChangeQuantity(cartItemData.id, productQuantityRef.current.value);
+      }
+      setIsEdit(!isEdit);
     }
   };
   const handleBlurProductQuantityInput = () => {
     handleChangeQuantity(cartItemData.id, productQuantityRef.current.value);
-    setIsEdit(false);
+    setIsEdit(!isEdit);
   };
   return (
     <tr className="product-item" key={cartItemData.id}>
@@ -69,8 +71,10 @@ const CartItem = ({ cartItemData }: CartItemProps) => {
             <input
               autoFocus
               ref={productQuantityRef}
-              className="product-quantity-input"
+              className="product-quantity-input fade"
               type="number"
+              min={0}
+              max={99}
               defaultValue={cartItemData.quantity}
               onKeyUp={handleUpdateQuantity}
               onBlur={handleBlurProductQuantityInput}

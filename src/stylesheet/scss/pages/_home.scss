@@ -1,7 +1,7 @@
 .section-banner {
   position: relative;
-  background: url('../../../../public/assets/images/banner.png') center center / cover
-    no-repeat;
+  background: url('../../../../public/assets/images/banner.png') center center /
+    cover no-repeat;
   height: 800px;
   .section-content-wrapper {
     display: flex;
@@ -81,16 +81,16 @@
       opacity: 0.7;
     }
     &-item:nth-child(1) .advertisement {
-      background: url('../../../../public/assets/images/advertisement-1.png') top center /
-        cover no-repeat;
+      background: url('../../../../public/assets/images/advertisement-1.png')
+        top center / cover no-repeat;
     }
     &-item:nth-child(2) .advertisement {
-      background: url('../../../../public/assets/images/advertisement-2.png') top center /
-        cover no-repeat;
+      background: url('../../../../public/assets/images/advertisement-2.png')
+        top center / cover no-repeat;
     }
     &-item:nth-child(3) .advertisement {
-      background: url('../../../../public/assets/images/advertisement-3.png') top center /
-        cover no-repeat;
+      background: url('../../../../public/assets/images/advertisement-3.png')
+        top center / cover no-repeat;
     }
     &-title {
       font-size: 24px;
@@ -206,7 +206,8 @@
       height: 68px;
       border-radius: 10px;
       background: map-get($color, white)
-        url('../../../../public/assets/icons/ic-dolar-black.svg') no-repeat center center;
+        url('../../../../public/assets/icons/ic-dolar-black.svg') no-repeat
+        center center;
     }
   }
 }
@@ -461,4 +462,21 @@
       top: 10px;
     }
   }
+}
+
+.err-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.err-product-image {
+  height: 300px;
+}
+
+.err-message {
+  font-size: 20px;
+  color: map-get($color, primary);
 }
