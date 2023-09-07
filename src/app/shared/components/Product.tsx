@@ -8,7 +8,7 @@ import {
   saveDataToLocalStorage,
 } from '../services/localStorage.service';
 import { AppState } from '../../../redux/reducers/reducer';
-import { modalContext } from '../../context/ModalContext';
+import { modalContext } from '../../core/context/ModalContext';
 
 interface productItemProps {
   product: ProductModel;

@@ -1,9 +1,4 @@
 import {
-  StorageKey,
-  removeDataLocalStorage,
-  saveDataToLocalStorage,
-} from '../../app/shared/services/localStorage.service';
-import {
   LOGIN_FAILED,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
@@ -16,9 +11,10 @@ export const loginRequest = () => {
   };
 };
 
-export const loginSuccess = () => {
+export const loginSuccess = (user: User) => {
   return {
     type: LOGIN_SUCCESS,
+    payload: user,
   };
 };
 
@@ -32,36 +28,38 @@ export const loginFailed = (err: any) => {
 };
 
 export const logOut = () => {
-  localStorage.clear();
   return {
     type: LOGOUT,
   };
 };
 
-export const login =
-  (username: string, password: string) => async (dispatch: any) => {
-    dispatch(loginRequest());
+export const login = (userData: User) => async (dispatch: any) => {
+  dispatch(loginRequest());
 
-    setTimeout(async () => {
-      try {
-        const response = await fetch('user.json');
-        const data = await response.json();
+  setTimeout(async () => {
+    try {
+      const response = await fetch('user.json');
+      const data = await response.json();
 
-        const user = data.find((item: any) => {
-          return item.username === username && item.password === password;
-        });
-        if (user) {
-          saveDataToLocalStorage(StorageKey.USER, user);
-          dispatch(loginSuccess());
-        } else {
-          dispatch(
-            loginFailed(
-              'Username or Password is incorrect , Please try again!!'
-            )
-          );
-        }
-      } catch (err) {
-        dispatch(loginFailed(err));
+      const user = data.find((item: any) => {
+        return (
+          item.email === userData.email && item.password === userData.password
+        );
+      });
+      if (user) {
+        dispatch(loginSuccess(user));
+      } else {
+        dispatch(
+          loginFailed('Email or Password is incorrect , Please try again!!')
+        );
       }
-    }, 2000);
-  };
+    } catch (err) {
+      dispatch(loginFailed(err));
+    }
+  }, 2000);
+};
+
+export interface User {
+  email: string;
+  password: string;
+}

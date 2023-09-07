@@ -2,6 +2,7 @@ import { ActionType } from '../../app/models/redux/action.interface';
 import {
   StorageKey,
   getDataFromLocalStorage,
+  saveDataToLocalStorage,
 } from '../../app/shared/services/localStorage.service';
 import {
   LOGIN_FAILED,
@@ -19,9 +20,7 @@ export interface AuthState {
 const initialState: AuthState = {
   isLogin:
     getDataFromLocalStorage(StorageKey.USER) &&
-    getDataFromLocalStorage(StorageKey.USER).length !== 0
-      ? true
-      : false,
+    getDataFromLocalStorage(StorageKey.USER).length !== 0,
   err: '',
   isLoading: false,
 };
@@ -39,6 +38,7 @@ export const authReducer = (
       };
     },
     [LOGIN_SUCCESS]: () => {
+      saveDataToLocalStorage(StorageKey.USER, action.payload);
       return {
         ...state,
         err: '',
@@ -55,6 +55,7 @@ export const authReducer = (
       };
     },
     [LOGOUT]: () => {
+      localStorage.clear();
       return {
         ...state,
         err: '',

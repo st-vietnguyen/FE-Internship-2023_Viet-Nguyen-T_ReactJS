@@ -7,7 +7,7 @@ import Header from './shared/components/Header';
 import Home from './pages/home';
 import Footer from './shared/components/Footer';
 import CartPage from './pages/cart';
-import { ModalProvider } from './context/ModalContext';
+import { ModalProvider } from './core/context/ModalContext';
 import { AppState } from '../redux/reducers/reducer';
 
 function App() {

@@ -1,17 +1,12 @@
 [
   {
     "id": 0,
-    "username": "trongviet",
+    "email": "trongviet@gmail.com",
     "password": "123456"
   },
   {
     "id": 1,
-    "username": "vietnguyen",
-    "password": "123456"
-  },
-  {
-    "id": 2,
-    "username": "vietnt",
+    "email": "vietnguyen@gmail.com",
     "password": "123456"
   }
 ]
