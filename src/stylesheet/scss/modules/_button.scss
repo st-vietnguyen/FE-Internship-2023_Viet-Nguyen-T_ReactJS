@@ -15,4 +15,8 @@
   &:hover {
     background-color: map-get($color, primary-hover);
   }
+  &.disabled {
+    background-color: #f4c780;
+    cursor: context-menu;
+  }
 }

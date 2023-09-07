@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 
 import { AppState } from '../../../redux/reducers/reducer';
@@ -10,6 +10,7 @@ import {
   StorageKey,
   getDataFromLocalStorage,
 } from '../services/localStorage.service';
+import { logOut } from '../../../redux/actions/auth';
 
 const Header = () => {
   const location = useLocation();
@@ -18,6 +19,7 @@ const Header = () => {
   const cartQuantity = useSelector((state: AppState) =>
     cartService.calcTotalProduct(state.cart.listCartItem)
   );
+  const dispatch = useDispatch();
   const user = getDataFromLocalStorage(StorageKey.USER);
   const { isShow, setIsShow } = useContext(modalContext);
   const isLogin = useSelector((state: AppState) => state.auth.isLogin);
@@ -28,6 +30,9 @@ const Header = () => {
     } else {
       setIsShow(!isShow);
     }
+  };
+  const handleLogOut = () => {
+    dispatch(logOut());
   };
   return (
     <header
@@ -82,7 +87,8 @@ const Header = () => {
               </li>
             ) : (
               <li className="action-item">
-                <span className='hi-text'>Hi : {user.username}</span>
+                <span className="hi-text">Hi : {user.username}</span>
+                <i className="icon icon-logout" onClick={handleLogOut}></i>
               </li>
             )}
           </ul>

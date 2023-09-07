@@ -1,8 +1,14 @@
 import {
   StorageKey,
+  removeDataLocalStorage,
   saveDataToLocalStorage,
 } from '../../app/shared/services/localStorage.service';
-import { LOGIN_FAILED, LOGIN_REQUEST, LOGIN_SUCCESS } from '../types/auth';
+import {
+  LOGIN_FAILED,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGOUT,
+} from '../types/auth';
 
 export const loginRequest = () => {
   return {
@@ -22,6 +28,13 @@ export const loginFailed = (err: any) => {
     payload: {
       err,
     },
+  };
+};
+
+export const logOut = () => {
+  localStorage.clear();
+  return {
+    type: LOGOUT,
   };
 };
 

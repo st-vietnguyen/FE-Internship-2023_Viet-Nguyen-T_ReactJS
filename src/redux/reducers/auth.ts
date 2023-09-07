@@ -3,7 +3,12 @@ import {
   StorageKey,
   getDataFromLocalStorage,
 } from '../../app/shared/services/localStorage.service';
-import { LOGIN_FAILED, LOGIN_REQUEST, LOGIN_SUCCESS } from '../types/auth';
+import {
+  LOGIN_FAILED,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGOUT,
+} from '../types/auth';
 
 export interface AuthState {
   isLogin: boolean;
@@ -45,6 +50,14 @@ export const authReducer = (
       return {
         ...state,
         err: action.payload.err,
+        isLoading: false,
+        isLogin: false,
+      };
+    },
+    [LOGOUT]: () => {
+      return {
+        ...state,
+        err: '',
         isLoading: false,
         isLogin: false,
       };
