@@ -5,7 +5,7 @@
   left: 0;
   right: 0;
   padding-top: 48px;
-  z-index: 99;
+  z-index: 3;
 
   &.header-cart-page {
     position: relative;
@@ -32,21 +32,26 @@
   .actions {
     display: flex;
     justify-content: flex-end;
-    .action-item{
+    .action-item {
+      display: flex;
+      align-items: center;
       cursor: pointer;
       position: relative;
+      .hi-text {
+        color: map-get($color, white);
+      }
       .cart-quantity {
         display: flex;
         justify-content: center;
         align-items: center;
         position: absolute;
-        right : -8px;
-        top : -5px;
+        right: -8px;
+        top: -5px;
         width: 25px;
         height: 25px;
         border-radius: 50%;
-        background-color: map-get($color, primary );
-        color : map-get($color, white );
+        background-color: map-get($color, primary);
+        color: map-get($color, white);
       }
     }
   }
@@ -77,24 +82,27 @@
     padding: 20px 0;
     .logo {
       &-image {
-        content: url("../../../../public/assets/images/Logo-ip11.png");
+        content: url('../../../../public/assets/images/Logo-ip11.png');
       }
     }
     .nav-bar {
       display: none;
     }
     .actions .icon-search {
-      background: transparent url("../../../../public/assets/icons/ic-search-black.svg")
-        no-repeat center center;
+      background: transparent
+        url('../../../../public/assets/icons/ic-search-black.svg') no-repeat
+        center center;
     }
     .actions .icon-cart {
-      background: transparent url("../../../../public/assets/icons/ic-cart-black.svg")
-        no-repeat center center;
+      background: transparent
+        url('../../../../public/assets/icons/ic-cart-black.svg') no-repeat
+        center center;
     }
 
     .actions .icon-user {
-      background: transparent url("../../../../public/assets/icons/ic-user-black.svg")
-        no-repeat center center;
+      background: transparent
+        url('../../../../public/assets/icons/ic-user-black.svg') no-repeat
+        center center;
     }
   }
 }

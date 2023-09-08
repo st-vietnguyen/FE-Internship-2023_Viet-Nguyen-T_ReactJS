@@ -1,11 +1,22 @@
 .btn {
+  display: inline-block;
   font-weight: map-get($font-weight, bold);
   font-size: 13px;
   color: map-get($color, secondary);
   padding: 14px 16px;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
 }
 
 .btn-primary {
   color: map-get($color, white);
   background-color: map-get($color, primary);
+  &:hover {
+    background-color: map-get($color, primary-hover);
+  }
+  &.disabled {
+    background-color: #f4c780;
+    cursor: context-menu;
+  }
 }

@@ -57,7 +57,7 @@ const CartPage = () => {
                   <div className="col col-3">
                     <div className="checkout">
                       <h3 className="checkout-title">Checkout</h3>
-                      <span className="cart-total-price btn btn-primary">
+                      <span className="cart-total-price btn">
                         TOTAL: {cartService.calcTotalPrice(cart)}
                       </span>
                     </div>

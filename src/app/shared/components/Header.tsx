@@ -1,15 +1,41 @@
-import { useSelector } from 'react-redux';
-import { useLocation, Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 
 import { AppState } from '../../../redux/reducers/reducer';
 import { CartService } from '../services/cart.services';
+import { modalContext } from '../../core/context/ModalContext';
+import {
+  StorageKey,
+  getDataFromLocalStorage,
+} from '../services/localStorage.service';
+import { logOut } from '../../../redux/actions/auth';
 
 const Header = () => {
-  const location = useLocation();
   const cartService = new CartService();
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isLogin = useSelector((state: AppState) => state.auth.isLogin);
+  const { isShow, setIsShow } = useContext(modalContext);
   const cartQuantity = useSelector((state: AppState) =>
     cartService.calcTotalProduct(state.cart.listCartItem)
   );
+
+  const user = getDataFromLocalStorage(StorageKey.USER);
+
+  const checkLogin = (e: React.MouseEvent<HTMLElement>) => {
+    if (isLogin) {
+      navigate('/cart');
+    } else {
+      setIsShow(!isShow);
+    }
+  };
+
+  const handleLogOut = () => {
+    dispatch(logOut());
+  };
 
   return (
     <header
@@ -51,16 +77,25 @@ const Header = () => {
               <i className="icon icon-search"></i>
             </li>
             <li className="action-item">
-              <Link className="action-link" to="/cart">
-                {cartQuantity > 0 && (
+              <Link className="action-link" to="/cart" onClick={checkLogin}>
+                {isLogin && cartQuantity > 0 && (
                   <div className="cart-quantity">{cartQuantity}</div>
                 )}
                 <i className="icon icon-cart"></i>
               </Link>
             </li>
-            <li className="action-item">
-              <i className="icon icon-user"></i>
-            </li>
+            {!isLogin ? (
+              <li className="action-item">
+                <i
+                  className="icon icon-user"
+                  onClick={() => setIsShow(!isShow)}></i>
+              </li>
+            ) : (
+              <li className="action-item">
+                <span className="hi-text">Hi : {user.email}</span>
+                <i className="icon icon-logout" onClick={handleLogOut}></i>
+              </li>
+            )}
           </ul>
         </div>
       </div>
